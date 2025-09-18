@@ -46,26 +46,28 @@ The final SVM model with RBF kernel achieved:
 ## Project Structure
 
 ```
+
 ├── README.md
 ├── data/
 │   ├── raw/                    # Original CSV files from PhyPhox
 │   └── processed/              # Processed feature files
 ├── scripts/
-│   ├── data_acquisition.py     # Data collection from PhyPhox
-│   ├── data_processing.py      # Feature extraction
-│   ├── communication_test.py   # PhyPhox connection testing
-│   ├── data_plot.py           # Real-time visualization
-│   ├── online_prototype.py    # Real-time classifier (inline model)
-│   └── online_classification.py # Real-time classifier (saved models)
+│   ├── data\_acquisition.py     # Data collection from PhyPhox
+│   ├── data\_processing.py      # Feature extraction
+│   ├── communication\_test.py   # PhyPhox connection testing
+│   ├── data\_plot.py            # Real-time visualization
+│   ├── online\_prototype.py     # Real-time classifier (inline model)
+│   └── online\_classification.py # Real-time classifier (saved models)
 ├── models/
-│   ├── final_svm_model_svm.pkl        # Trained SVM model
-│   ├── standard_scaler_audio.pkl      # Feature scaler
-│   └── audio_feature_selector_svm.pkl # Feature selector
+│   ├── final\_svm\_model\_svm.pkl        # Trained SVM model
+│   ├── standard\_scaler\_audio.pkl      # Feature scaler
+│   └── audio\_feature\_selector\_svm.pkl # Feature selector
 ├── notebooks/
 │   └── Project.ipynb          # Complete analysis and model development
 └── docs/
-    └── Report.pdf            # Detailed project report
-```
+└── Report.pdf             # Detailed project report
+
+````
 
 ## Requirements
 
@@ -82,121 +84,138 @@ The final SVM model with RBF kernel achieved:
 
 ### Real-time Classification
 
-Para ejecutar el clasificador de audio en tiempo real, sigue estos pasos:
+To run the real-time audio classifier, follow these steps:
 
-#### Paso 1: Configuración de PhyPhox
-1. **Instalar PhyPhox**: Descarga e instala la aplicación PhyPhox en tu dispositivo móvil:
+#### Step 1: PhyPhox Setup
+1. **Install PhyPhox**: Download and install the PhyPhox app on your mobile device:
    - [Android](https://play.google.com/store/apps/details?id=de.rwth_aachen.phyphox)
    - [iOS](https://apps.apple.com/app/phyphox/id1127319693)
 
-2. **Configurar experimento**:
-   - Abre PhyPhox y busca el experimento **"Audio Amplitude"**
-   - Activa la opción **"Allow remote access"** en la configuración
-   - Anota la dirección IP que aparece en pantalla (ej. `192.168.1.100`)
+2. **Configure experiment**:
+   - Open PhyPhox and search for the experiment **"Audio Amplitude"**
+   - Enable the option **"Allow remote access"** in settings
+   - Write down the IP address shown on the screen (e.g., `192.168.1.100`)
 
-#### Paso 2: Configuración del entorno
-1. **Instalar dependencias**:
+#### Step 2: Environment Setup
+1. **Install dependencies**:
    ```bash
    pip install -r requirements.txt
-   ```
+````
 
-2. **Generar modelos entrenados** (si no existen):
+2. **Generate trained models** (if they don’t exist):
+
    ```bash
    cd notebooks/
-   jupyter notebook Proyecto.ipynb
-   # Ejecuta todas las celdas hasta la sección "Clasificación en línea"
+   jupyter notebook Project.ipynb
+   # Run all cells up to the "Online Classification" section
    ```
 
-#### Paso 3: Configuración de IP
-1. **Editar script de clasificación**:
+#### Step 3: IP Configuration
+
+1. **Edit classification script**:
+
    ```bash
    nano scripts/online_classification.py
    ```
 
-2. **Actualizar la IP** en la línea 46:
+2. **Update the IP** on line 46:
+
    ```python
-   IP_ADDRESS = '192.168.1.100'  # Cambia por tu IP de PhyPhox
+   IP_ADDRESS = '192.168.1.100'  # Replace with your PhyPhox IP
    ```
 
-#### Paso 4: Ejecutar clasificación en tiempo real
-1. **Asegurar que los modelos estén en la carpeta correcta**:
+#### Step 4: Run Real-time Classification
+
+1. **Ensure models are in the correct folder**:
+
    ```bash
    ls models/
-   # Debe mostrar: final_svm_model_svm.pkl, standard_scaler_audio.pkl, audio_feature_selector_svm.pkl
+   # Must show: final_svm_model_svm.pkl, standard_scaler_audio.pkl, audio_feature_selector_svm.pkl
    ```
 
-2. **Iniciar PhyPhox**: Presiona ▶️ PLAY en el experimento "Audio Amplitude"
+2. **Start PhyPhox**: Press ▶️ PLAY in the "Audio Amplitude" experiment
 
-3. **Ejecutar clasificador**:
+3. **Run classifier**:
+
    ```bash
    cd scripts/
    python online_classification.py
    ```
 
-#### Opciones de clasificación disponibles:
+#### Available classification options:
 
-**Opción 1: Clasificador con modelos pre-entrenados** (Recomendado)
+**Option 1: Classifier with pre-trained models** (Recommended)
+
 ```bash
 python scripts/online_classification.py
 ```
-- Carga modelos desde archivos `.pkl`
-- Mayor velocidad de inicio
-- Requiere haber ejecutado el notebook previamente
 
-**Opción 2: Clasificador con entrenamiento inline**
+* Loads models from `.pkl` files
+* Faster startup
+* Requires running the notebook beforehand
+
+**Option 2: Classifier with inline training**
+
 ```bash
 python scripts/online_prototype.py
 ```
-- Entrena el modelo al inicio usando `audio_features.txt`
-- Tarda más en iniciar pero no requiere archivos `.pkl`
 
-#### Resultados esperados:
+* Trains the model at startup using `audio_features.txt`
+* Slower startup but doesn’t require `.pkl` files
+
+#### Expected results:
+
 ```
-🔊 Predicción #1: CONVERSACION (Conf: 0.87)
-🔊 Predicción #2: MUSICA (Conf: 0.92)
-🔊 Predicción #3: SILENCIO_AMB (Conf: 0.95)
+🔊 Prediction #1: CONVERSATION (Conf: 0.87)
+🔊 Prediction #2: MUSIC (Conf: 0.92)
+🔊 Prediction #3: SILENCE_AMB (Conf: 0.95)
 ```
 
 #### Troubleshooting:
-- **Error "Archivo no encontrado .pkl"**: Ejecuta el notebook completo primero
-- **Error "Timeout"**: Verifica que PhyPhox esté en PLAY y la IP sea correcta
-- **Error "Phyphox status measuring: False"**: Presiona PLAY en PhyPhox
-- **Predicciones erráticas**: Asegúrate de estar en un ambiente similar al entrenamiento
+
+* **Error "File not found .pkl"**: Run the complete notebook first
+* **Error "Timeout"**: Check that PhyPhox is in PLAY mode and IP is correct
+* **Error "Phyphox status measuring: False"**: Press PLAY in PhyPhox
+* **Erratic predictions**: Ensure you’re in an environment similar to training
 
 ### Model Training
 
-The complete model development process is available in `notebooks/Proyecto.ipynb`, including:
-- Data loading and preprocessing
-- Feature extraction
-- Model comparison and selection
-- Hyperparameter optimization
-- Cross-validation results
+The complete model development process is available in `notebooks/Project.ipynb`, including:
+
+* Data loading and preprocessing
+* Feature extraction
+* Model comparison and selection
+* Hyperparameter optimization
+* Cross-validation results
 
 ## Medical Applications
 
 This system can be applied to:
-- **Emergency detection**: Identifying screams or calls for help
-- **Patient monitoring**: Detecting changes in vocal patterns
-- **Environmental control**: Monitoring noise levels in medical facilities
-- **Telemedicine**: Remote audio-based symptom analysis
-- **Rehabilitation**: Tracking progress in speech therapy
+
+* **Emergency detection**: Identifying screams or calls for help
+* **Patient monitoring**: Detecting changes in vocal patterns
+* **Environmental control**: Monitoring noise levels in medical facilities
+* **Telemedicine**: Remote audio-based symptom analysis
+* **Rehabilitation**: Tracking progress in speech therapy
 
 ## Real-time Performance
 
 The system shows excellent performance for:
-- Silence/ambient: Perfect classification
-- Music: Very good (high volume)
-- Whispers: Perfect (within specific amplitude range)
+
+* Silence/ambient: Perfect classification
+* Music: Very good (high volume)
+* Whispers: Perfect (within specific amplitude range)
 
 Areas for improvement:
-- Scream classification: Tends to confuse with music/applause
-- Conversation: Requires consistent tone
-- Device dependency: Performance varies between different microphones
+
+* Scream classification: Tends to confuse with music/applause
+* Conversation: Requires consistent tone
+* Device dependency: Performance varies between different microphones
 
 ## Authors
 
-- Andrés Martínez Almazán (A01621042)
-- Diego Arechiga Bonilla (A01621045)
+* Andrés Martínez Almazán (A01621042)
+* Diego Arechiga Bonilla (A01621045)
 
 **Course**: Modeling Learning with Artificial Intelligence
 **Institution**: Tecnológico de Monterrey
@@ -206,3 +225,8 @@ Areas for improvement:
 ## License
 
 This project was developed for academic purposes as part of a machine learning course.
+
+```
+
+¿Quieres que además te genere el `requirements.txt` en otra celda con las dependencias exactas para que tu repo quede listo para correr?
+```
