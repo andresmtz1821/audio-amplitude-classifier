@@ -205,10 +205,9 @@ Areas for improvement:
 | Phyphox status measuring: False | Press PLAY in PhyPhox app |
 | Erratic predictions | Ensure environment is similar to training conditions |
 
-## Authors
+## Author
 
 - **Andrés Martínez Almazán** (A01621042)
-- **Diego Arechiga Bonilla** (A01621045)
 
 **Course**: Modeling Learning with Artificial Intelligence  
 **Institution**: Tecnológico de Monterrey  
