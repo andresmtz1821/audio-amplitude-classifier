@@ -24,13 +24,24 @@ label_dict = {
 ##########################################
 ##### Load data and train model here ##### 
 ##########################################
+import os
+
+# Obtener el directorio donde está este script
+script_dir = os.path.dirname(os.path.abspath(__file__))
+models_dir = os.path.join(script_dir, '..', 'models')
+
 try:
-    with open('standard_scaler_audio.pkl', 'rb') as f:
+    with open(os.path.join(models_dir, 'standard_scaler_audio.pkl'), 'rb') as f:
         scaler = pickle.load(f)
-    with open('audio_feature_selector_svm.pkl', 'rb') as f:
+    print("✓ Scaler cargado correctamente")
+    
+    with open(os.path.join(models_dir, 'audio_feature_selector_svm.pkl'), 'rb') as f:
         feature_selector = pickle.load(f)
-    with open('final_svm_model_svm.pkl', 'rb') as f:
+    print("✓ Feature selector cargado correctamente")
+    
+    with open(os.path.join(models_dir, 'final_svm_model_svm.pkl'), 'rb') as f:
         final_model = pickle.load(f)
+    print("✓ Modelo SVM cargado correctamente")
 
 except FileNotFoundError as e:
     print(f"No se encontró uno de los archivos .pkl: {e}")
@@ -43,7 +54,7 @@ print("------------------------------------------")
 ##########################################
 ##### Data acquisition configuration #####
 ##########################################
-IP_ADDRESS = '10.43.36.156' 
+ IP_ADDRESS = '192.168.1.193' 
 COMMAND = 'calibration&dB=full&time=full' 
 BASE_URL = f"http://{IP_ADDRESS}/get?{COMMAND}" 
 
