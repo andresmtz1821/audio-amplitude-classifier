@@ -522,6 +522,25 @@ elif page == "Technical Analysis":
 elif page == "Live Demo":
     st.markdown('<h1 class="main-header">Real-Time Demo</h1>', unsafe_allow_html=True)
     
+    # Demo video showing the system working
+    st.markdown("### See It In Action")
+    st.video("https://youtu.be/WBYwuCTU8vU")
+    
+    # Note explaining local-only functionality
+    st.warning("""
+    **Important Note:** The interactive classification below only works when running this application locally. 
+    This is because PhyPhox transmits data over your local WiFi network using a private IP address 
+    (e.g., 192.168.x.x), which cannot be accessed from cloud servers.
+    
+    **To try it yourself:**
+    1. Clone the repository: `git clone https://github.com/YOUR_USERNAME/audio-amplitude-classifier`
+    2. Install dependencies: `pip install -r requirements.txt`
+    3. Run locally: `streamlit run app.py`
+    4. Connect PhyPhox on the same WiFi network
+    """)
+    
+    st.markdown("---")
+    
     if not models_loaded:
         st.error("Models could not be loaded. Verify that .pkl files are in the 'models/' folder.")
         st.stop()
@@ -529,7 +548,7 @@ elif page == "Live Demo":
     st.success("Models loaded successfully")
     
     # Instructions
-    with st.expander("Usage Instructions", expanded=True):
+    with st.expander("Usage Instructions (Local Only)", expanded=True):
         st.markdown("""
         ### Steps for real-time classification:
         
