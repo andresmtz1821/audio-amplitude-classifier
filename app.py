@@ -279,6 +279,46 @@ if page == "Home":
     
     st.markdown("---")
     
+    # Why does this system matter?
+    st.header("Why Does This System Matter?")
+    
+    st.markdown("""
+    In hospitals, response time can mean the difference between life and death. Traditional patient 
+    monitoring relies on nurses periodically checking rooms or patients pressing call buttons — but 
+    what happens when a patient **can't** press that button?
+    """)
+    
+    col1, col2 = st.columns([1, 1])
+    
+    with col1:
+        st.markdown("""
+        ### Real-World Scenario
+        
+        > *A post-operative patient experiences sudden pain during the night shift. They cry out, 
+        > but the nursing station is far away and understaffed. Minutes pass before anyone notices.*
+        
+        **With this system:**
+        - The scream is detected **instantly**
+        - An alert is sent to the nurse's smartphone
+        - Response time drops from **minutes to seconds**
+        - The patient receives timely care
+        """)
+    
+    with col2:
+        st.markdown("""
+        ### Key Benefits
+        
+        | Challenge | Solution |
+        |-----------|----------|
+        | Limited staff at night | Automated 24/7 monitoring |
+        | Patients unable to call for help | Passive detection, no interaction needed |
+        | Delayed emergency response | Real-time alerts to medical staff |
+        | Noisy hospital environments | ML distinguishes critical sounds from background noise |
+        | Manual monitoring fatigue | Consistent, tireless acoustic surveillance |
+        """)
+    
+    st.markdown("---")
+    
     # How it works
     st.header("How It Works")
     
@@ -533,7 +573,7 @@ elif page == "Live Demo":
     (e.g., 192.168.x.x), which cannot be accessed from cloud servers.
     
     **To try it yourself:**
-    1. Clone the repository: `git clone https://github.com/YOUR_USERNAME/audio-amplitude-classifier`
+    1. Clone the repository: `git clone https://github.com/andresmtz1821/audio-amplitude-classifier`
     2. Install dependencies: `pip install -r requirements.txt`
     3. Run locally: `streamlit run app.py`
     4. Connect PhyPhox on the same WiFi network
